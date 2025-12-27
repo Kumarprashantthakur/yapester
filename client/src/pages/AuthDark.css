@@ -1,0 +1,217 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --bg-main: #05070f;
+  --bg-card: #0b1020;
+  --bg-input: #0f172a;
+  --border-soft: rgba(255, 255, 255, 0.06);
+
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+
+  --accent: #7c7cff;
+  --accent-soft: rgba(124, 124, 255, 0.35);
+
+  --danger: #fb7185;
+  --success: #4ade80;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+.auth-wrapper {
+  min-height: 98vh;
+  background:
+    radial-gradient(60% 40% at 50% 0%, rgba(124,124,255,0.15), transparent),
+    var(--bg-main);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 430px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01)),
+    var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 22px;
+  padding: 44px;
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  color: var(--text-main);
+  animation: premiumIn 0.6s cubic-bezier(.2,.8,.2,1);
+  transition: transform 0.25s ease;
+}
+
+/* subtle premium hover (desktop only) */
+@media (hover: hover) {
+  .auth-card:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.auth-card h1 {
+  font-size: 30px;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -0.6px;
+  margin-bottom: 6px;
+}
+
+.auth-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 34px;
+}
+
+.field {
+  margin-bottom: 18px;
+}
+
+.field input {
+  width: 100%;
+  padding: 15px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-input);
+  color: var(--text-main);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.field input::placeholder {
+  color: #64748b;
+}
+
+.field input:focus-visible {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* Chrome autofill fix */
+input:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px var(--bg-input) inset;
+  -webkit-text-fill-color: var(--text-main);
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 15px;
+  border-radius: 16px;
+  border: none;
+  background: linear-gradient(135deg, var(--accent), #5b5bff);
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.2s;
+}
+
+.auth-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 55px var(--accent-soft);
+}
+
+.auth-btn:active {
+  transform: scale(0.97);
+}
+
+
+.auth-logo {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 16px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #0f172a, #020617);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 
+    0 0 0 2px rgba(255,255,255,0.08),
+    0 10px 30px rgba(0,0,0,0.6);
+}
+
+.auth-logo img {
+  width: 75%;
+  height: 75%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+
+/* optional loading state */
+.auth-btn.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.alert {
+  padding: 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.alert.error {
+  background: rgba(251, 113, 133, 0.15);
+  color: #fecdd3;
+}
+
+.alert.success {
+  background: rgba(74, 222, 128, 0.15);
+  color: #bbf7d0;
+}
+
+.switch-auth {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 26px;
+  color: var(--text-muted);
+}
+
+.switch-auth a {
+  color: #b4b4ff;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.switch-auth a:hover {
+  text-decoration: underline;
+}
+
+@keyframes premiumIn {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* Mobile polish */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 34px 24px;
+    border-radius: 18px;
+  }
+}
