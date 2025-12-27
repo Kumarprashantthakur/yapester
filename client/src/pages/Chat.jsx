@@ -3,7 +3,7 @@ import axios from "axios";
 import io from "socket.io-client";
 import "./Chat.css";
 
-const socket = io("http://localhost:5000");
+const socket = io("https://yapester.onrender.com/");
 
 export default function Chat() {
   const token = sessionStorage.getItem("token");
