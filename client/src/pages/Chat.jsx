@@ -43,12 +43,20 @@ export default function Chat() {
     }
 
     axios
-      .get("http://localhost:5000/api/users/me", authHeader)
+      .get("https://yapester.onrender.com/api/users/me", authHeader)
       .then((res) => setCurrentUser(res.data))
-      .catch(() => {
-        sessionStorage.clear();
-        window.location.href = "/";
-      });
+     .catch((err) => {
+  console.error("ME API FAILED:", err.response?.status);
+
+  // ❌ token clear mat karo
+  // ❌ auto redirect mat karo
+
+  // bas login pe bhejo agar token hi nahi ho
+  if (err.response?.status === 401) {
+    window.location.href = "/";
+  }
+});
+
   }, []);
 
   /* ================= USERS ================= */
@@ -56,7 +64,7 @@ export default function Chat() {
     if (!currentUser) return;
 
     axios
-      .get("http://localhost:5000/api/users", authHeader)
+      .get("https://yapester.onrender.com/api/users", authHeader)
       .then((res) =>
         setUsers(res.data.filter((u) => u._id !== currentUser._id))
       );
@@ -67,15 +75,15 @@ export default function Chat() {
     if (!currentUser) return;
 
     axios
-      .get("http://localhost:5000/api/follow/connections", authHeader)
+      .get("https://yapester.onrender.com/api/follow/connections", authHeader)
       .then((res) => setConnections(res.data || []));
 
     axios
-      .get("http://localhost:5000/api/follow/requests", authHeader)
+      .get("https://yapester.onrender.com/api/follow/requests", authHeader)
       .then((res) => setRequests(res.data || []));
       
       axios
-  .get("http://localhost:5000/api/follow/sent", authHeader)
+  .get("https://yapester.onrender.com/api/follow/sent", authHeader)
   .then((res) => {
     console.log("SENT REQUESTS 👉", res.data); // 🔥
     setSentRequests(res.data || []);
@@ -132,7 +140,7 @@ export default function Chat() {
 
     axios
       .get(
-        `http://localhost:5000/api/messages/${selectedUser._id}`,
+        `https://yapester.onrender.com/api/messages/${selectedUser._id}`,
         authHeader
       )
       .then((res) => {
@@ -212,7 +220,7 @@ const isRequested = (id) =>
   const sendFollow = async (id) => {
     try {
       await axios.post(
-        `http://localhost:5000/api/follow/send/${id}`,
+        `https://yapester.onrender.com/api/follow/send/${id}`,
         {},
         authHeader
       );
@@ -231,18 +239,18 @@ const isRequested = (id) =>
 
   const acceptRequest = (id) =>
     axios
-      .post(`http://localhost:5000/api/follow/accept/${id}`, {}, authHeader)
+      .post(`https://yapester.onrender.com/api/follow/accept/${id}`, {}, authHeader)
       .then(() => window.location.reload());
 
   const rejectRequest = (id) =>
     axios
-      .post(`http://localhost:5000/api/follow/reject/${id}`, {}, authHeader)
+      .post(`https://yapester.onrender.com/api/follow/reject/${id}`, {}, authHeader)
       .then(() => window.location.reload());
 
   const disconnectUser = async (id) => {
     try {
       await axios.post(
-        `http://localhost:5000/api/follow/disconnect/${id}`,
+        `https://yapester.onrender.com/api/follow/disconnect/${id}`,
         {},
         authHeader
       );
@@ -251,7 +259,7 @@ const isRequested = (id) =>
       setSelectedUser(null);
 
       const res = await axios.get(
-        "http://localhost:5000/api/follow/connections",
+        "https://yapester.onrender.com/api/follow/connections",
         authHeader
       );
       setConnections(res.data || []);
