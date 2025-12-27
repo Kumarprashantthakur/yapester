@@ -20,21 +20,36 @@ function Login() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
+  e.preventDefault();
+  setError("");
 
-    try {
-      const res = await API.post("/auth/login", form);
+  try {
+    const res = await API.post("/auth/login", form);
 
-      // Save token
-      sessionStorage.setItem("token", res.data.token);
+    // 🔥 DEBUG (temporary)
+    console.log("LOGIN RESPONSE:", res.data);
 
-      // Redirect
-      navigate("/chat");
-    } catch (err) {
-      setError(err.response?.data?.message || "Invalid email or password");
+    // 🔥 TOKEN EXTRACT (SAFE)
+    const token =
+      res.data.token ||
+      res.data.accessToken ||
+      res.data?.data?.token;
+
+    if (!token) {
+      throw new Error("Token not found in response");
     }
-  };
+
+    // 🔥 SAVE TOKEN
+    sessionStorage.setItem("token", token);
+
+    // 🔥 REDIRECT
+    navigate("/chat");
+  } catch (err) {
+    console.error(err);
+    setError(err.response?.data?.message || "Login failed");
+  }
+};
+
 
   return (
     <div className="auth-wrapper">
