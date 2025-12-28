@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import API from "../services/api";
 import "./AuthDark.css";
 
 function ForgotPassword() {
@@ -8,17 +7,17 @@ function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
 
-    try {
-      await API.post("/auth/forgot-password", { email });
-
-      navigate("/reset-password", { state: { email } });
-    } catch (err) {
-      setError(err.response?.data?.message || "Email not found");
+    if (!email) {
+      setError("Email required");
+      return;
     }
+
+    // ✅ DIRECT RESET PAGE
+    navigate("/reset-password", { state: { email } });
   };
 
   return (
@@ -41,7 +40,7 @@ function ForgotPassword() {
           </div>
 
           <button className="auth-btn" type="submit">
-            Submit
+            Continue
           </button>
         </form>
       </div>

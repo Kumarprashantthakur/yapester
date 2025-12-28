@@ -14,6 +14,12 @@ function ResetPassword() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // ❗ direct access protection
+  if (!email) {
+    navigate("/forgot-password");
+    return null;
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -30,15 +36,13 @@ function ResetPassword() {
         password,
       });
 
-      // ✅ premium success message
-      setSuccess("Password successfully changed");
+      setSuccess("Password successfully changed ✅");
 
-      // auto redirect after 2 sec
       setTimeout(() => {
         navigate("/");
       }, 2000);
-    } catch (err) {
-      setError("Something went wrong");
+    } catch {
+      setError("Failed to reset password");
     }
   };
 
@@ -49,7 +53,7 @@ function ResetPassword() {
         <p className="auth-subtitle">Create new password</p>
 
         {error && <div className="alert error">{error}</div>}
-        {success && <div className="alert success">✅ {success}</div>}
+        {success && <div className="alert success">{success}</div>}
 
         <form onSubmit={handleSubmit}>
           <div className="field">
