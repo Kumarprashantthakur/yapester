@@ -53,6 +53,17 @@
   flex-direction: column;
 }
 
+.sidebar {
+  overflow-y: auto;
+  scrollbar-width: none;      /* Firefox */
+  -ms-overflow-style: none;   /* IE / Edge */
+}
+
+.sidebar::-webkit-scrollbar {
+  display: none;              /* Chrome / Safari */
+}
+
+
 .profile {
   font-size: 20px;
   font-weight: 700;
